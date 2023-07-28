@@ -53,8 +53,8 @@ export function computePoolAddress({
     .keccak256(ethers.utils.concat([
       prefix, ethers.utils.zeroPad(factoryAddress, 32), 
       salt,
-       POOL_INIT_CODE_HASH, 
-      initCodeHashManualOverride??inputHash]
+      initCodeHashManualOverride??POOL_INIT_CODE_HASH, 
+      inputHash]
       ))
     .slice(26);
   const rs = ethers.utils.getAddress(addressBytes) 
