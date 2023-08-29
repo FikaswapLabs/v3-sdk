@@ -1,5 +1,5 @@
 import { Interface } from '@ethersproject/abi'
-import IMulticall from './abi/v3-periphery/artifacts/contracts/interfaces/IMulticall.sol/IMulticall.json'
+import IMulticall from './abis/v3-periphery/artifacts/contracts/interfaces/IMulticall.sol/IMulticall.json'
 
 export abstract class Multicall {
   public static INTERFACE: Interface = new Interface(IMulticall.abi)
@@ -14,6 +14,6 @@ export abstract class Multicall {
       calldatas = [calldatas]
     }
 
-    return calldatas.length === 1 ? calldatas[0] : Multicall.INTERFACE.encodeFunctionData('multicall', [calldatas])
+    return calldatas.length === 1 ? calldatas[0]! : Multicall.INTERFACE.encodeFunctionData('multicall', [calldatas])
   }
 }

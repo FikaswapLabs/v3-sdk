@@ -1,8 +1,8 @@
-export const FACTORY_ADDRESS = '0x93E16eD844f7Db1Af680bC62e835add8A8170Fbf'
+export const FACTORY_ADDRESS = '0xFF13FaDD7Bd6E9189De7C7320bedE08E77E2ddA1'
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
-export const POOL_INIT_CODE_HASH = '0x010013efaf9ef9b4a043d30718652726fe91aea02bf08336b2c3eb200ef82a97'
+export const POOL_INIT_CODE_HASH = '0x010013ef0e3a86295866ccb9f11899a28961f41895fdc5b8361716f78f7e3f66'
 
 /**
  * The default factory enabled fee amounts, denominated in hundredths of bips.

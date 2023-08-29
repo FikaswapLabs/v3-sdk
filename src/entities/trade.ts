@@ -297,15 +297,15 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
         amounts[0] = CurrencyAmount.fromFractionalAmount(route.input.wrapped, amount.numerator, amount.denominator)
 
         for (let i = 0; i < route.tokenPath.length - 1; i++) {
-          const pool = route.pools[i]
-          const [outputAmount] = await pool.getOutputAmount(amounts[i])
+          const pool = route.pools[i]!
+          const [outputAmount] = await pool.getOutputAmount(amounts[i]!)
           amounts[i + 1] = outputAmount
         }
 
         outputAmount = CurrencyAmount.fromFractionalAmount(
           route.output,
-          amounts[amounts.length - 1].numerator,
-          amounts[amounts.length - 1].denominator
+          amounts[amounts.length - 1]!.numerator,
+          amounts[amounts.length - 1]!.denominator
         )
       } else {
         invariant(amount.currency.equals(route.output), 'OUTPUT')
@@ -318,11 +318,11 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
 
         for (let i = route.tokenPath.length - 1; i > 0; i--) {
           const pool = route.pools[i - 1]
-          const [inputAmount] = await pool.getInputAmount(amounts[i])
+          const [inputAmount] = await pool!.getInputAmount(amounts[i]!)
           amounts[i - 1] = inputAmount
         }
 
-        inputAmount = CurrencyAmount.fromFractionalAmount(route.input, amounts[0].numerator, amounts[0].denominator)
+        inputAmount = CurrencyAmount.fromFractionalAmount(route.input, amounts[0]!.numerator, amounts[0]!.denominator)
       }
 
       populatedRoutes.push({ route, inputAmount, outputAmount })
@@ -405,8 +405,8 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
     }[]
     tradeType: TTradeType
   }) {
-    const inputCurrency = routes[0].inputAmount.currency
-    const outputCurrency = routes[0].outputAmount.currency
+    const inputCurrency = routes[0]!.inputAmount.currency
+    const outputCurrency = routes[0]!.outputAmount.currency
     invariant(
       routes.every(({ route }) => inputCurrency.wrapped.equals(route.input.wrapped)),
       'INPUT_CURRENCY_MATCH'
@@ -509,7 +509,7 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
     const amountIn = nextAmountIn.wrapped
     const tokenOut = currencyOut.wrapped
     for (let i = 0; i < pools.length; i++) {
-      const pool = pools[i]
+      const pool = pools[i]!
       // pool irrelevant
       if (!pool.token0.equals(amountIn.currency) && !pool.token1.equals(amountIn.currency)) continue
 
@@ -590,7 +590,7 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
     const amountOut = nextAmountOut.wrapped
     const tokenIn = currencyIn.wrapped
     for (let i = 0; i < pools.length; i++) {
-      const pool = pools[i]
+      const pool = pools[i]!
       // pool irrelevant
       if (!pool.token0.equals(amountOut.currency) && !pool.token1.equals(amountOut.currency)) continue
 

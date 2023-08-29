@@ -8,7 +8,7 @@ import * as ethers from 'ethers'
 
 /**
  * Computes a pool address
- * @param factoryAddress The Uniswap V3 factory address
+ * @param factoryAddress The Fikaswap V3 factory address
  * @param tokenA The first token of the pair, irrespective of sort order
  * @param tokenB The second token of the pair, irrespective of sort order
  * @param fee The fee tier of the pool

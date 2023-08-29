@@ -39,16 +39,16 @@ export abstract class TickList {
 
   public static isBelowSmallest(ticks: readonly Tick[], tick: number): boolean {
     invariant(ticks.length > 0, 'LENGTH')
-    return tick < ticks[0].index
+    return tick < ticks[0]!.index
   }
 
   public static isAtOrAboveLargest(ticks: readonly Tick[], tick: number): boolean {
     invariant(ticks.length > 0, 'LENGTH')
-    return tick >= ticks[ticks.length - 1].index
+    return tick >= ticks[ticks.length - 1]!.index
   }
 
   public static getTick(ticks: readonly Tick[], index: number): Tick {
-    const tick = ticks[this.binarySearch(ticks, index)]
+    const tick = ticks[this.binarySearch(ticks, index)]!
     invariant(tick.index === index, 'NOT_CONTAINED')
     return tick
   }
@@ -68,11 +68,11 @@ export abstract class TickList {
     while (true) {
       i = Math.floor((l + r) / 2)
 
-      if (ticks[i].index <= tick && (i === ticks.length - 1 || ticks[i + 1].index > tick)) {
+      if (ticks[i]!.index <= tick && (i === ticks.length - 1 || ticks[i + 1]!.index > tick)) {
         return i
       }
 
-      if (ticks[i].index < tick) {
+      if (ticks[i]!.index < tick) {
         l = i + 1
       } else {
         r = i - 1
@@ -84,17 +84,17 @@ export abstract class TickList {
     if (lte) {
       invariant(!TickList.isBelowSmallest(ticks, tick), 'BELOW_SMALLEST')
       if (TickList.isAtOrAboveLargest(ticks, tick)) {
-        return ticks[ticks.length - 1]
+        return ticks[ticks.length - 1]!
       }
       const index = this.binarySearch(ticks, tick)
-      return ticks[index]
+      return ticks[index]!
     } else {
       invariant(!this.isAtOrAboveLargest(ticks, tick), 'AT_OR_ABOVE_LARGEST')
       if (this.isBelowSmallest(ticks, tick)) {
-        return ticks[0]
+        return ticks[0]!
       }
       const index = this.binarySearch(ticks, tick)
-      return ticks[index + 1]
+      return ticks[index + 1]!
     }
   }
 

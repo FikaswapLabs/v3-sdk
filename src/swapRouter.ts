@@ -6,7 +6,7 @@ import { ADDRESS_ZERO } from './constants'
 import { PermitOptions, SelfPermit } from './selfPermit'
 import { encodeRouteToPath } from './utils'
 import { MethodParameters, toHex } from './utils/calldata'
-import ISwapRouter from './abi/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json'
+import ISwapRouter from './abis/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json'
 import { Multicall } from './multicall'
 import { FeeOptions, Payments } from './payments'
 
@@ -69,7 +69,7 @@ export abstract class SwapRouter {
       trades = [trades]
     }
 
-    const sampleTrade = trades[0]
+    const sampleTrade = trades[0]!
     const tokenIn = sampleTrade.inputAmount.currency.wrapped
     const tokenOut = sampleTrade.outputAmount.currency.wrapped
 
@@ -85,8 +85,8 @@ export abstract class SwapRouter {
 
     const calldatas: string[] = []
 
-    const ZERO_IN: CurrencyAmount<Currency> = CurrencyAmount.fromRawAmount(trades[0].inputAmount.currency, 0)
-    const ZERO_OUT: CurrencyAmount<Currency> = CurrencyAmount.fromRawAmount(trades[0].outputAmount.currency, 0)
+    const ZERO_IN: CurrencyAmount<Currency> = CurrencyAmount.fromRawAmount(trades[0]!.inputAmount.currency, 0)
+    const ZERO_OUT: CurrencyAmount<Currency> = CurrencyAmount.fromRawAmount(trades[0]!.outputAmount.currency, 0)
 
     const totalAmountOut: CurrencyAmount<Currency> = trades.reduce(
       (sum, trade) => sum.add(trade.minimumAmountOut(options.slippageTolerance)),
@@ -106,8 +106,8 @@ export abstract class SwapRouter {
 
     // encode permit if necessary
     if (options.inputTokenPermit) {
-      invariant(sampleTrade.inputAmount.currency.isToken, 'NON_TOKEN_PERMIT')
-      calldatas.push(SelfPermit.encodePermit(sampleTrade.inputAmount.currency, options.inputTokenPermit))
+      invariant(sampleTrade!.inputAmount.currency.isToken, 'NON_TOKEN_PERMIT')
+      calldatas.push(SelfPermit.encodePermit(sampleTrade!.inputAmount.currency, options.inputTokenPermit))
     }
 
     const recipient: string = validateAndParseAddress(options.recipient)
@@ -124,9 +124,9 @@ export abstract class SwapRouter {
         if (singleHop) {
           if (trade.tradeType === TradeType.EXACT_INPUT) {
             const exactInputSingleParams = {
-              tokenIn: route.tokenPath[0].address,
-              tokenOut: route.tokenPath[1].address,
-              fee: route.pools[0].fee,
+              tokenIn: route.tokenPath[0]!.address,
+              tokenOut: route.tokenPath[1]!.address,
+              fee: route.pools[0]!.fee,
               recipient: routerMustCustody ? ADDRESS_ZERO : recipient,
               deadline,
               amountIn,
@@ -137,9 +137,9 @@ export abstract class SwapRouter {
             calldatas.push(SwapRouter.INTERFACE.encodeFunctionData('exactInputSingle', [exactInputSingleParams]))
           } else {
             const exactOutputSingleParams = {
-              tokenIn: route.tokenPath[0].address,
-              tokenOut: route.tokenPath[1].address,
-              fee: route.pools[0].fee,
+              tokenIn: route.tokenPath[0]!.address,
+              tokenOut: route.tokenPath[1]!.address,
+              fee: route.pools[0]!.fee,
               recipient: routerMustCustody ? ADDRESS_ZERO : recipient,
               deadline,
               amountOut,
@@ -187,7 +187,7 @@ export abstract class SwapRouter {
         } else {
           calldatas.push(
             Payments.encodeSweepToken(
-              sampleTrade.outputAmount.currency.wrapped,
+              sampleTrade!.outputAmount.currency.wrapped,
               totalAmountOut.quotient,
               recipient,
               options.fee

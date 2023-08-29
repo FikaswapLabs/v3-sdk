@@ -1,6 +1,6 @@
 import JSBI from 'jsbi'
 import { Interface } from '@ethersproject/abi'
-import IPeripheryPaymentsWithFee from './abi/v3-periphery/artifacts/contracts/interfaces/IPeripheryPaymentsWithFee.sol/IPeripheryPaymentsWithFee.json'
+import IPeripheryPaymentsWithFee from './abis/v3-periphery/artifacts/contracts/interfaces/IPeripheryPaymentsWithFee.sol/IPeripheryPaymentsWithFee.json'
 import { Percent, Token, validateAndParseAddress } from '@fikaswap/sdk-core'
 import { toHex } from './utils/calldata'
 

@@ -1,8 +1,8 @@
 import { Interface } from '@ethersproject/abi'
 import { BigintIsh, Currency, CurrencyAmount, TradeType } from '@fikaswap/sdk-core'
 import { encodeRouteToPath, MethodParameters, toHex } from './utils'
-import IQuoter from './abi/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
-import IQuoterV2 from './abi/swap-router-contracts/artifacts/contracts/lens/QuoterV2.sol/QuoterV2.json'
+import IQuoter from './abis/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
+import IQuoterV2 from './abis/swap-router-contracts/artifacts/contracts/lens/QuoterV2.sol/QuoterV2.json'
 import { Route } from './entities'
 import invariant from 'tiny-invariant'
 import { FeeAmount } from './constants'
@@ -61,9 +61,9 @@ export abstract class SwapQuoter {
 
     if (singleHop) {
       const baseQuoteParams: BaseQuoteParams = {
-        tokenIn: route.tokenPath[0].address,
-        tokenOut: route.tokenPath[1].address,
-        fee: route.pools[0].fee,
+        tokenIn: route.tokenPath[0]!.address,
+        tokenOut: route.tokenPath[1]!.address,
+        fee: route.pools[0]!.fee,
         sqrtPriceLimitX96: toHex(options?.sqrtPriceLimitX96 ?? 0)
       }
 

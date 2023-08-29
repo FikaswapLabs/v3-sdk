@@ -1,7 +1,7 @@
 import { BigintIsh, Token, validateAndParseAddress } from '@fikaswap/sdk-core'
 import { MethodParameters, toHex } from './utils/calldata'
 import { defaultAbiCoder, Interface } from '@ethersproject/abi'
-import IUniswapV3Staker from './abi/v3-staker/artifacts/contracts/UniswapV3Staker.sol/UniswapV3Staker.json'
+import IUniswapV3Staker from './abis/v3-staker/artifacts/contracts/UniswapV3Staker.sol/UniswapV3Staker.json'
 import { Pool } from './entities'
 import { Multicall } from './multicall'
 
@@ -110,7 +110,7 @@ export abstract class Staker {
 
     for (let i = 0; i < incentiveKeys.length; i++) {
       // the unique program tokenId is staked in
-      const incentiveKey = incentiveKeys[i]
+      const incentiveKey = incentiveKeys[i]!
       // unstakes and claims for the unique program
       calldatas = calldatas.concat(this.encodeClaim(incentiveKey, options))
       // re-stakes the position for the unique program
@@ -148,7 +148,7 @@ export abstract class Staker {
     }
 
     for (let i = 0; i < incentiveKeys.length; i++) {
-      const incentiveKey = incentiveKeys[i]
+      const incentiveKey = incentiveKeys[i]!
       calldatas = calldatas.concat(this.encodeClaim(incentiveKey, claimOptions))
     }
     const owner = validateAndParseAddress(withdrawOptions.owner)
@@ -177,12 +177,12 @@ export abstract class Staker {
     if (incentiveKeys.length > 1) {
       const keys = []
       for (let i = 0; i < incentiveKeys.length; i++) {
-        const incentiveKey = incentiveKeys[i]
+        const incentiveKey = incentiveKeys[i]!
         keys.push(this._encodeIncentiveKey(incentiveKey))
       }
       data = defaultAbiCoder.encode([`${Staker.INCENTIVE_KEY_ABI}[]`], [keys])
     } else {
-      data = defaultAbiCoder.encode([Staker.INCENTIVE_KEY_ABI], [this._encodeIncentiveKey(incentiveKeys[0])])
+      data = defaultAbiCoder.encode([Staker.INCENTIVE_KEY_ABI], [this._encodeIncentiveKey(incentiveKeys[0]!)])
     }
     return data
   }
