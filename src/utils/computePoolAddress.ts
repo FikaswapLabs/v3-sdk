@@ -3,8 +3,8 @@ import { getCreate2Address } from '@ethersproject/address'
 import { keccak256 } from '@ethersproject/solidity'
 import { Token } from '@fikaswap/sdk-core'
 import { FeeAmount, POOL_INIT_CODE_HASH } from '../constants'
-import { defaultAbiCoder as utilDefaultAbiCoder} from "ethers/lib/utils";
-import * as ethers from 'ethers' 
+import { defaultAbiCoder as utilDefaultAbiCoder } from "ethers/lib/utils";
+import * as ethers from 'ethers'
 
 /**
  * Computes a pool address
@@ -28,17 +28,17 @@ export function computePoolAddress({
   fee: FeeAmount
   initCodeHashManualOverride?: string
 }): string {
- 
-  if(tokenA.chainId!==280&&tokenA.chainId!==324){
+
+  if (tokenA.chainId !== 280 && tokenA.chainId !== 324) {
     return computePoolAddress_UNI({
-     factoryAddress: '0x1F98431c8aD98523631AE4a59f267346ea31F984',
+      factoryAddress: '0x1F98431c8aD98523631AE4a59f267346ea31F984',
       tokenA,
       tokenB,
       fee,
-     initCodeHashManualOverride
+      initCodeHashManualOverride
     })
   }
- 
+
   const [token0, token1] = tokenA.address.toLowerCase() < tokenB.address.toLowerCase() ? [tokenA.address, tokenB.address] : [tokenB.address, tokenA.address]
 
   const prefix = '0x2020dba91b30cc0006188af794c2fb30dd8520db7e2c088b7fc7c103c00ca494' //ethers.utils.keccak256(ethers.utils.toUtf8Bytes('zksyncCreate2'));
@@ -47,17 +47,17 @@ export function computePoolAddress({
   const salt = ethers.utils.keccak256(utilDefaultAbiCoder.encode(
     ['address', 'address', 'uint24'],
     [token0, token1, fee])
-  ) 
+  )
 
   const addressBytes = ethers.utils
     .keccak256(ethers.utils.concat([
-      prefix, ethers.utils.zeroPad(factoryAddress, 32), 
+      prefix, ethers.utils.zeroPad(factoryAddress, 32),
       salt,
-      initCodeHashManualOverride??POOL_INIT_CODE_HASH, 
+      initCodeHashManualOverride ?? POOL_INIT_CODE_HASH(tokenA.chainId),
       inputHash]
-      ))
+    ))
     .slice(26);
-  const rs = ethers.utils.getAddress(addressBytes) 
+  const rs = ethers.utils.getAddress(addressBytes)
   return rs
 }
 

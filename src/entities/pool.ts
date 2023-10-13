@@ -49,7 +49,7 @@ export class Pool {
     factoryAddressOverride?: string
   ): string {
     return computePoolAddress({
-      factoryAddress: factoryAddressOverride ?? FACTORY_ADDRESS,
+      factoryAddress: factoryAddressOverride ?? FACTORY_ADDRESS(tokenA.chainId),
       fee,
       tokenA,
       tokenB,

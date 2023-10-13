@@ -10,7 +10,7 @@ const COMPUTED_INIT_CODE_HASH = keccak256(['bytes'], [IFikaswapV3Pool.bytecode])
 describe('constants', () => {
   describe('INIT_CODE_HASH', () => {
     it('matches computed bytecode hash', () => {
-      expect(COMPUTED_INIT_CODE_HASH).toEqual(POOL_INIT_CODE_HASH)
+      expect(COMPUTED_INIT_CODE_HASH).toEqual(POOL_INIT_CODE_HASH(324))
     })
   })
 })
