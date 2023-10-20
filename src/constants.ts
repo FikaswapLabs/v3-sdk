@@ -9,7 +9,7 @@ export function FACTORY_ADDRESS(chainId: number): string {
     return '0xc713b22Dcce8DD9E46C3b886848d378d1d0C22A8'
   }
   else
-    return '0xc713b22Dcce8DD9E46C3b886848d378d1d0C22A8'
+    return '0x1F98431c8aD98523631AE4a59f267346ea31F984' //uniswap
 }
 
 
@@ -20,7 +20,7 @@ export function POOL_INIT_CODE_HASH(chainId: number): string {
     return '0x010013efa2e0a6b8508ba65ba8e424c01dd8fa715bac96ab05c5ed82b0e88754'
   }
   else
-    return '0x010013efa2e0a6b8508ba65ba8e424c01dd8fa715bac96ab05c5ed82b0e88754'
+    return '0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54' //uniswap
 }
 
 /**
