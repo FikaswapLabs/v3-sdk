@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.4.0",
+  "version": "3.6.0",
   "description": "⚒️ An SDK for building applications on top of Fikaswap V3",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -26,10 +26,10 @@
   "dependencies": {
     "@ethersproject/abi": "^5.0.12",
     "@ethersproject/solidity": "^5.0.9",
-    "@fikaswap/sdk-core": "^3.0.2",
+    "@fikaswap/sdk-core": "^3.6.0",
+    "ethers": "^5.3.1",
     "tiny-invariant": "^1.1.0",
-    "tiny-warning": "^1.0.3",
-    "ethers": "^5.3.1"
+    "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
     "@types/jest": "^24.0.25",
