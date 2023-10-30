@@ -74,7 +74,7 @@ export function computePoolAddress_Old({
   fee: FeeAmount
   initCodeHashManualOverride?: string
 }): string {
-  if (!factoryAddress) factoryAddress = '0x1F98431c8aD98523631AE4a59f267346ea31F984'
+  // if (!factoryAddress) factoryAddress = '0x1F98431c8aD98523631AE4a59f267346ea31F984'
   const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA] // does safety checks 
   return getCreate2Address(
     factoryAddress,
